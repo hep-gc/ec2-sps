@@ -50,3 +50,13 @@
 2014-04-08 14:32:39,269 Starting new HTTP connection (1): django-dev.heprc.uvic.ca
 2014-04-08 14:33:26,051 Request Type current_spot_price
 2014-04-08 14:33:26,060 Starting new HTTP connection (1): django-dev.heprc.uvic.ca
+2014-04-08 15:27:01,183 Request Type current_spot_price
+2014-04-08 15:27:01,203 Starting new HTTP connection (1): django-dev.heprc.uvic.ca
+2014-04-08 15:27:48,896 Request Type current_spot_price
+2014-04-08 15:27:48,907 Starting new HTTP connection (1): django-dev.heprc.uvic.ca
+2014-04-08 15:28:17,070 Request Type current_spot_price
+2014-04-08 15:28:17,079 Starting new HTTP connection (1): django-dev.heprc.uvic.ca
+2014-04-08 17:16:27,450 Request Type current_spot_price
+2014-04-08 17:16:27,459 Starting new HTTP connection (1): django-dev.heprc.uvic.ca
+2014-04-08 17:16:59,394 Request Type current_spot_price
+2014-04-08 17:16:59,403 Starting new HTTP connection (1): django-dev.heprc.uvic.ca

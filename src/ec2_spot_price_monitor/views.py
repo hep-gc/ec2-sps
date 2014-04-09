@@ -31,6 +31,7 @@ def init_spot_price_service():
     logging.info("Initialized spot price service")
     config_file.close()
     
+    print("Logging mode %s"%cfg_obj['LOGGING_LEVEL'])
 
 @csrf_exempt
 def request_spot_price(request):
@@ -54,7 +55,7 @@ def request_spot_price(request):
         json_response_data = spot_price_api.get_current_spot_price(json_req) 
         json_response_data = utils.filter_response(json_response_data, json_req['filter_type'])
     elif json_req['request'] == 'periodic_spot_price':  
-        pprint("Get Periodic Spot Prices")  
+        #pprint("Get Periodic Spot Prices")  
         args = json_req['other_args']
         
         start_date = dateutil.parser.parse(args['job_start_time'])
@@ -65,7 +66,7 @@ def request_spot_price(request):
         curr_date = start_date
         while curr_date < stop_date:
             curr_stop_date = curr_date + dt.timedelta(hours=job_exec_time)
-            pprint("comparing ::%s:: ::%s:: ::%s::"%(curr_date,curr_stop_date,stop_date))
+            #pprint("comparing ::%s:: ::%s:: ::%s::"%(curr_date,curr_stop_date,stop_date))
             
             json_req['start_time'] = curr_date.isoformat()
             json_req['end_time'] = curr_stop_date.isoformat()

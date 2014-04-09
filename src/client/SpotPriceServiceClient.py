@@ -6,6 +6,7 @@ April 2, 2014
 """
 import sys,json,logging, requests, json_factory
 
+import datetime as dt
 
 URL = ""
 
@@ -32,17 +33,17 @@ def _show_help():
     print("--------------")
     print("To determine current spot price of an m3.medium vm type in region us-west-2 and return all results in json format")
     print("")
-    print("blogins@machine:~$ python SpotPriceServiceAPI.py -rt current_spot_price -it Linux/UNIX -nt m3.medium -r us-west-2 -ft none -df json ")
+    print("blogins@machine:~$ python SpotPriceServiceClient.py -rt current_spot_price -it Linux/UNIX -nt m3.medium -r us-west-2 -ft none -df json ")
     print("")
     print("")
     print("To determine current spot price of 2 vm types in 2 regions and return the average result in html format")
     print("")
-    print("blogins@machine:~$ python SpotPriceServiceAPI.py -rt current_spot_price -it Linux/UNIX -nt t1.micro m1.medium -r us-west-2 us-west-1 -ft average -df html ")
+    print("blogins@machine:~$ python SpotPriceServiceClient.py -rt current_spot_price -it Linux/UNIX -nt t1.micro m1.medium -r us-west-2 us-west-1 -ft average -df html ")
     print("")
     print("")
     print("To determine periodic (over past 3 months, every Monday from 8:09pm till Tuesday 4:09am = 8 hour job) spot price of an m3.medium vm type in region us-west-2 and return all results in json format")
     print("")
-    print("blogins@machine:~$ python SpotPriceServiceAPI.py -rt periodic_spot_price -it Linux/UNIX -jt 2014-01-02T20:09:07.157Z -jo 2014-03-02T20:09:07.157Z -je 8 -jp 168 -nt m3.medium -r us-west-2 -ft none -df json ")
+    print("blogins@machine:~$ python SpotPriceServiceClient.py -rt periodic_spot_price -it Linux/UNIX -jt 2014-01-02T20:09:07.157Z -jo 2014-03-02T20:09:07.157Z -je 8 -jp 168 -nt m3.medium -r us-west-2 -ft none -df json ")
     print("")
     print("")
     
@@ -74,6 +75,36 @@ def _generate_args(args,argv):
    
     return [args,_get_arg(argv,'-ft')[0],_get_arg(argv,'-df')[0]]
 
+def get_current_us_west_2_spot_price(img_type):
+    result=get_current_spot_price(["Linux/UNIX"], [img_type], ["us-west-2"], [], "none", "json")
+    return result[0]['price']
+
+def get_highest_us_west_2_spot_price(img_type,duration):
+    result=list_all_spot_price(["Linux/UNIX"], [img_type], ["us-west-2"], [], "highest", "json",duration)
+    return result[0]['price']
+
+def get_average_us_west_2_spot_price(img_type,duration):
+    result=list_all_spot_price(["Linux/UNIX"], [img_type], ["us-west-2"], [], "average", "json",duration)
+    return result[0]['price']
+
+def get_average_us_west_2_periodic_spot_price(img_type,duration,start_date,period):
+    stop_date = dt.datetime.now().isoformat()
+    result = get_periodic_spot_price(["Linux/UNIX"], ["t1.micro"], ["us-west-2"], ["us-west-2a"], "average", "json", duration ,period, start_date , stop_date)
+    total=0.0
+    for res in result:
+        total=total+res['price']
+    return total/len(result)
+
+def get_highest_us_west_2_periodic_spot_price(img_type,duration,start_date,period):
+    stop_date = dt.datetime.now().isoformat()
+    result = get_periodic_spot_price(["Linux/UNIX"], ["t1.micro"], ["us-west-2"], ["us-west-2a"], "highest", "json", duration ,period, start_date , stop_date)
+    high=0.0000
+    for res in result:
+        #print ("found %s"%res['price'])
+        if res['price'] >= high:
+            high = res['price']
+    return high
+
 def get_current_spot_price(image_type,instance_type,regions,zones,filter_type,response_type):
     """API function
     image_type $string see help -h 
@@ -91,7 +122,7 @@ def get_current_spot_price(image_type,instance_type,regions,zones,filter_type,re
     json_req = json_factory.create_request('current_spot_price',filter_type,response_type,{},args)
     json_response_data = json.loads(requests.post(URL,data={"jsonMsg":json.dumps(json_req)},cookies=None).text)
     logging.debug(json_req)
-    print(json_response_data['response_data'])
+    #print(json_response_data['response_data'])
     return json_response_data['response_data']
     
 def list_all_spot_price(image_type,instance_type,regions,zones,filter_type,response_type,job_exe_time):
@@ -114,7 +145,7 @@ def list_all_spot_price(image_type,instance_type,regions,zones,filter_type,respo
     json_req = json_factory.create_request('list_all_spot_price',filter_type,response_type,other_args,args)
     json_response_data = json.loads(requests.post(URL,data={"jsonMsg":json.dumps(json_req)},cookies=None).text)
     logging.debug(json_req)
-    print(json_response_data)   
+    #print(json_response_data)   
     return json_response_data['response_data']     
     
 def get_periodic_spot_price(image_type,instance_type,regions,zones,filter_type,response_type,job_exec_time,job_period_time,job_start_time,job_stop_time):
@@ -143,7 +174,7 @@ def get_periodic_spot_price(image_type,instance_type,regions,zones,filter_type,r
     json_req = json_factory.create_request('periodic_spot_price',filter_type,response_type,other_args,args)
     json_response_data = json.loads(requests.post(URL,data={"jsonMsg":json.dumps(json_req)},cookies=None).text)
     logging.debug(json_req)
-    print(json_response_data)
+    #print(json_response_data)
     return json_response_data['response_data']
 
 def _main(argv): 

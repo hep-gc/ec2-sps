@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['test',['Test',['../classec2__api__tools_1_1test_1_1TestSpotPriceService_1_1Test.html',1,'ec2_api_tools::test::TestSpotPriceService']]]
+  ['testcurrentspotprice',['TestCurrentSpotPrice',['../classtestcases_1_1TestSpotPriceService_1_1TestCurrentSpotPrice.html',1,'testcases::TestSpotPriceService']]],
+  ['testlistallspotprice',['TestListAllSpotPrice',['../classtestcases_1_1TestSpotPriceService_1_1TestListAllSpotPrice.html',1,'testcases::TestSpotPriceService']]],
+  ['testperiodicspotprice',['TestPeriodicSpotPrice',['../classtestcases_1_1TestSpotPriceService_1_1TestPeriodicSpotPrice.html',1,'testcases::TestSpotPriceService']]]
 ];

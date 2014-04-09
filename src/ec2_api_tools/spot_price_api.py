@@ -5,7 +5,7 @@ Created on Mar 27, 2014
 '''
 from pprint import pprint
 
-import boto.ec2
+import boto.ec2,logging
 
 def get_current_spot_price(json_req):
     req_args_array = json_req['request_args']
@@ -35,7 +35,7 @@ def get_current_spot_price(json_req):
             for zone in zones:
                 for inst in inst_types:
                     for img in image_types:
-                        pprint("get sel zone price for %s %s %s "%(zone,inst,img))
+                        #pprint("get sel zone price for %s %s %s "%(zone,inst,img))
                         
                         start_time = json_req['start_time']
                         end_time = json_req['end_time']
@@ -51,7 +51,7 @@ def get_current_spot_price(json_req):
                         price = conn.get_spot_price_history(start_time, end_time, instance_type, product_description, availability_zone, dry_run, max_results, next_token, filters)
                         #price_obj = price.pop()
                         for price_obj in price:
-                            pprint("%s : %s "%(price_obj,price_obj.price))
+                            #pprint("%s : %s "%(price_obj,price_obj.price))
                             json_data = {}
                             json_data['region']=region
                             json_data['instance_type']=inst
@@ -69,7 +69,7 @@ def get_current_spot_price(json_req):
             for zone in reg_zones:
                 for inst in inst_types:
                     for img in image_types:
-                        pprint("OK:get all zones price for %s %s %s "%(zone,inst,img))
+                        #pprint("OK:get all zones price for %s %s %s "%(zone,inst,img))
                         start_time = json_req['start_time']
                         end_time = json_req['end_time']
                         instance_type=inst
@@ -82,7 +82,7 @@ def get_current_spot_price(json_req):
                         price = conn.get_spot_price_history(start_time, end_time, instance_type, product_description, availability_zone, dry_run, max_results, next_token, filters)
                         
                         for price_obj in price:
-                            pprint("%s : %s "%(price_obj,price_obj.price))
+                            #pprint("%s : %s "%(price_obj,price_obj.price))
                             json_data = {}
                             json_data['region']=region
                             json_data['instance_type']=inst
@@ -91,7 +91,7 @@ def get_current_spot_price(json_req):
                             json_data['price']=price_obj.price
                             json_data['timestamp']=price_obj.timestamp
                             json_response_data.append(json_data)
-    
+    logging.debug(json_response_data)
     return json_response_data
                             
                 
