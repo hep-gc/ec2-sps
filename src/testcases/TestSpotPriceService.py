@@ -36,7 +36,7 @@ class TestUSW2AveragePeriodicSpotPrice(unittest.TestCase):
         pass
 
     def testCurrSpotPrice(self):
-        start_date = (dt.datetime.now()-dt.timedelta(hours=1680)).isoformat()
+        start_date = (dt.datetime.now()-dt.timedelta(hours=1704)).isoformat()
         price=spc.get_average_us_west_2_periodic_spot_price("m1.medium",24,start_date,168)
         print ("Average Weekly m1.medium price is %s over past 10 weeks"%price)
         assert isinstance(price,float)

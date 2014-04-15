@@ -89,7 +89,7 @@ def get_average_us_west_2_spot_price(img_type,duration):
 
 def get_average_us_west_2_periodic_spot_price(img_type,duration,start_date,period):
     stop_date = dt.datetime.now().isoformat()
-    result = get_periodic_spot_price(["Linux/UNIX"], ["t1.micro"], ["us-west-2"], ["us-west-2a"], "average", "json", duration ,period, start_date , stop_date)
+    result = get_periodic_spot_price(["Linux/UNIX"], [img_type], ["us-west-2"], [], "average", "json", duration ,period, start_date , stop_date)
     total=0.0
     for res in result:
         total=total+res['price']
@@ -97,7 +97,7 @@ def get_average_us_west_2_periodic_spot_price(img_type,duration,start_date,perio
 
 def get_highest_us_west_2_periodic_spot_price(img_type,duration,start_date,period):
     stop_date = dt.datetime.now().isoformat()
-    result = get_periodic_spot_price(["Linux/UNIX"], ["t1.micro"], ["us-west-2"], ["us-west-2a"], "highest", "json", duration ,period, start_date , stop_date)
+    result = get_periodic_spot_price(["Linux/UNIX"], [img_type], ["us-west-2"], [], "highest", "json", duration ,period, start_date , stop_date)
     high=0.0000
     for res in result:
         #print ("found %s"%res['price'])
