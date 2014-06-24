@@ -12,4 +12,8 @@ usage:
 
 2: python SpotPriceServiceClient -h 
 
+note: 
+
+the client needs to know where the sps sevice is. It is currently using a service avail. on glint.heprc.uvic.ca:9363. You can change this in the spot_price_api.cfg file.
+
 
