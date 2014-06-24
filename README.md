@@ -8,7 +8,7 @@ install python client tool:
 
 usage:
 
-1: cd from directory you cloned the project cd <ec2-sps clone directory>/ecs-sps/src/client
+1: cd from directory you cloned the project cd \<ec2-sps clone directory\>/ecs-sps/src/client
 
 2: python SpotPriceServiceClient -h 
 
