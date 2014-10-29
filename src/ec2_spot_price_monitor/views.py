@@ -91,8 +91,8 @@ def request_spot_price(request):
 def _get_credentials():
     fh = open("%s/credentials.json"%os.path.expanduser("~"))
     text = fh.readlines()
-    print "textual:%s"%text
-    cred_obj=json.loads("%s"%text)
+    print "textual:%s"%text[0]
+    cred_obj=json.loads(text[0])
     return [cred_obj.access_key_id,cred_obj.secret_access_key]
 
 def index(request):
