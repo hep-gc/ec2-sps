@@ -91,12 +91,14 @@ def request_spot_price(request):
 def _get_credentials():
     fh = open("%s/credentials.json"%os.path.expanduser("~"))
     text = fh.readlines()
-    print "textual:%s"%text
-    return ["accesskey","secretkey"]
+    #print "textual:%s"%text
+    cred_obj=json.loads(text)
+    return [cred_obj.access_key_id,cred_obj.secret_access_key]
 
 def index(request):
     logging.info("page request")
     [access,secret] = _get_credentials()
+    print "Got %s : %s"%(access,secret)
     regions = boto.ec2.regions()
     zone_info={}
     for region in regions:
