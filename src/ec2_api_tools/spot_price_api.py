@@ -37,12 +37,17 @@ def get_current_spot_price(json_req):
     [access,secret] = _get_credentials()
     for region in regions:
         #check zones 
-        conn = boto.connect_ec2(
-                                   aws_access_key_id=access,
-                                   aws_secret_access_key=secret,
-                                   region=region
-                                   )
-        #conn = boto.ec2.connect_to_region(region)
+        #conn = boto.connect_ec2(
+        #                           aws_access_key_id=access,
+        #                           aws_secret_access_key=secret,
+        #                           region=region
+        #                           )
+        conn = boto.ec2.connect_to_region(
+                                    region=region,
+                                    aws_access_key_id=access,
+                                    aws_secret_access_key=secret
+                                  
+        )
         if len(zones) > 0:
             #for each zone do calls for each image and eash instance type   
             for zone in zones:
