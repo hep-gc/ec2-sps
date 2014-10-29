@@ -93,7 +93,7 @@ def _get_credentials():
     text = fh.readlines()
     print "textual:%s"%text[0]
     cred_obj=json.loads(text[0])
-    return [cred_obj.access_key_id,cred_obj.secret_access_key]
+    return [cred_obj['access_key_id'],cred_obj['secret_access_key']]
 
 def index(request):
     logging.info("page request")
