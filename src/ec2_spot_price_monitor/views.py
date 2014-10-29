@@ -104,14 +104,19 @@ def index(request):
     for region in regions:
         
         try:
-            conn = boto.ec2.connect_to_region(region.name)
+            conn = boto.connect_ec2(
+                                   aws_access_key_id=access,
+                                   aws_secret_access_key=secret,
+                                   region=region
+                                   )
+            #conn = boto.ec2.connect_to_region(region.name)
             zones = conn.get_all_zones()
             zone_array = []
             for zone in zones:
                 zone_array.append(zone.name)
             zone_info[region.name]=zone_array
-        except:
-            
+        except Exception as e:
+            print "Error adding region %s err: %s"%(region,e)
             regions.remove(region)
       
     img_types = ImageType.objects.all()
