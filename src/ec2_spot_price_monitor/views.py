@@ -96,9 +96,9 @@ def _get_credentials():
     return [cred_obj['access_key_id'],cred_obj['secret_access_key']]
 
 def index(request):
-    logging.info("page request")
+    #logging.info("page request")
     [access,secret] = _get_credentials()
-    print "Got %s : %s"%(access,secret)
+    #print "Got %s : %s"%(access,secret)
     regions = boto.ec2.regions()
     zone_info={}
     for region in regions:

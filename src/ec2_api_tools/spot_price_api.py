@@ -5,7 +5,14 @@ Created on Mar 27, 2014
 '''
 from pprint import pprint
 
-import boto.ec2,logging
+import boto.ec2,logging,json,os
+
+def _get_credentials():
+    fh = open("%s/credentials.json"%os.path.expanduser("~"))
+    text = fh.readlines()
+    print "textual:%s"%text[0]
+    cred_obj=json.loads(text[0])
+    return [cred_obj['access_key_id'],cred_obj['secret_access_key']]
 
 def get_current_spot_price(json_req):
     req_args_array = json_req['request_args']
@@ -27,9 +34,15 @@ def get_current_spot_price(json_req):
             if obj_key == 'ImageTypes':
                 image_types = obj[obj_key];
     
+    [access,secret] = _get_credentials()
     for region in regions:
         #check zones 
-        conn = boto.ec2.connect_to_region(region)
+        conn = boto.connect_ec2(
+                                   aws_access_key_id=access,
+                                   aws_secret_access_key=secret,
+                                   region=region
+                                   )
+        #conn = boto.ec2.connect_to_region(region)
         if len(zones) > 0:
             #for each zone do calls for each image and eash instance type   
             for zone in zones:
