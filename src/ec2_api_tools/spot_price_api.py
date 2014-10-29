@@ -46,8 +46,7 @@ def get_current_spot_price(json_req):
                                     region=region,
                                     aws_access_key_id=access,
                                     aws_secret_access_key=secret
-                                  
-        )
+                                    )
         if len(zones) > 0:
             #for each zone do calls for each image and eash instance type   
             for zone in zones:
