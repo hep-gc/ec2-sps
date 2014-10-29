@@ -89,7 +89,7 @@ def request_spot_price(request):
     return HttpResponse("%s"%(json.dumps(json_req)))
 
 def _get_credentials():
-    fh = open("~/credentials.json")
+    fh = open("%s/credentials.json"%os.path.expanduser("~"))
     text = fh.readlines()
     print "textual:%s"%text
     return ["accesskey","secretkey"]
