@@ -42,7 +42,8 @@ def get_current_spot_price(json_req):
         #check zones 
         conn = None
         for reg_obj in region_objs:
-            if reg_obj.name is region:
+            print "Compare %s with %s"%(reg_obj.name,region)
+            if reg_obj.name == region:
                 conn = boto.connect_ec2(
                                            aws_access_key_id=access,
                                            aws_secret_access_key=secret,
