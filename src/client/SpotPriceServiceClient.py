@@ -223,6 +223,7 @@ def _main(argv):
     pass
 
 if __name__ == "__main__":
+    #get the URL of the service from the config file
     cmd_str = sys.argv[0].replace("SpotPriceServiceClient.py","spot_price_api.cfg")
     config_file = open(cmd_str)
     cfg_file = ""

@@ -42,22 +42,16 @@ def get_current_spot_price(json_req):
         #check zones 
         conn = None
         for reg_obj in region_objs:
-            print "Compare %s with %s"%(reg_obj.name,region)
+            #print "Compare %s with %s"%(reg_obj.name,region)
             if reg_obj.name == region:
                 conn = boto.connect_ec2(
                                            aws_access_key_id=access,
                                            aws_secret_access_key=secret,
                                            region=reg_obj
                                            )
-        if conn is None:
-            #response = {}
-            #response['Error':'Error Creating Connection to region']
+        if conn is None:    
             return json_response_data
-        #conn = boto.ec2.connect_to_region(
-        #                            region=region,
-        #                            aws_access_key_id=access,
-        #                            aws_secret_access_key=secret
-        #                            )
+        
         if len(zones) > 0:
             #for each zone do calls for each image and eash instance type   
             for zone in zones:
