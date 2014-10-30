@@ -35,18 +35,28 @@ def get_current_spot_price(json_req):
                 image_types = obj[obj_key];
     
     [access,secret] = _get_credentials()
+    
+    region_objs = boto.ec2.regions()
+    
     for region in regions:
         #check zones 
-        #conn = boto.connect_ec2(
-        #                           aws_access_key_id=access,
-        #                           aws_secret_access_key=secret,
-        #                           region=region
-        #                           )
-        conn = boto.ec2.connect_to_region(
-                                    region=region,
-                                    aws_access_key_id=access,
-                                    aws_secret_access_key=secret
-                                    )
+        conn = None
+        for reg_obj in region_objs:
+            if reg_obj.name is region:
+                conn = boto.connect_ec2(
+                                           aws_access_key_id=access,
+                                           aws_secret_access_key=secret,
+                                           region=reg_obj
+                                           )
+        if conn is None:
+            response = {}
+            response['Error':'Error Creating Connection to region']
+            return response
+        #conn = boto.ec2.connect_to_region(
+        #                            region=region,
+        #                            aws_access_key_id=access,
+        #                            aws_secret_access_key=secret
+        #                            )
         if len(zones) > 0:
             #for each zone do calls for each image and eash instance type   
             for zone in zones:
