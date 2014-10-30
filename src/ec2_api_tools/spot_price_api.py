@@ -49,9 +49,9 @@ def get_current_spot_price(json_req):
                                            region=reg_obj
                                            )
         if conn is None:
-            response = {}
-            response['Error':'Error Creating Connection to region']
-            return response
+            #response = {}
+            #response['Error':'Error Creating Connection to region']
+            return json_response_data
         #conn = boto.ec2.connect_to_region(
         #                            region=region,
         #                            aws_access_key_id=access,
